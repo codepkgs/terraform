@@ -1,0 +1,4 @@
+.vscode
+.terrafrom
+terrafrom.tfstate
+terrafrom.tfstate.backup
