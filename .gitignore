@@ -1,4 +1,4 @@
 .vscode
 .terraform
-terrafrom.tfstate
-terrafrom.tfstate.backup
+terraform.tfstate
+terraform.tfstate.backup
