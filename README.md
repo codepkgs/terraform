@@ -28,3 +28,16 @@ RESOURCE_NAME：采用驼峰命名。如 testVpc
 * 子模块只暴露当前资源的属性，资源和属性之间使用下划线（`_`）隔开，如 `testVpc_id`
 * 上层如果也要暴露内层资源的属性，要加上相应的目录结构，也采用下划线隔开。如 `test_beijing_vpc_testVpc_id`
 * 根目录暴露变量的时候，加上资源所在的模块。如 `alicloud_test_beijing_vpc_testVpc_id`
+
+
+# 执行步骤
+
+## 创建资源
+1. 执行 `terraform init`
+如果 `provider` 或 `module` 发生变化，需要执行这一步。
+
+2. 执行 `terraform plan`
+生成执行计划，检查有哪些资源发生了变化，是否是用户所期望的，如果不是，需要修改。
+
+3. 执行 `terraform apply`
+应用更改。
