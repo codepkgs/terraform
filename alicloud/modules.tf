@@ -5,11 +5,3 @@ module "test_beijing_vpc" {
     alicloud = alicloud.beijing
   }
 }
-
-module "test_hangzhou_vpc" {
-  source = "./test/hangzhou/vpc"
-
-  providers = {
-    alicloud = alicloud.hangzhou
-  }
-}
