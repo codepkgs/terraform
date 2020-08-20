@@ -7,7 +7,13 @@ terraform 是一个基础设施管理工具，通过代码的形式管理基础�
 # Terraform 目录结构
 
 个人目前使用的目录结构为：`MODULE/ENVIRONMENT/REGION/RESOURCE/*.tf`
-输出变量统一放在 `outputs.tf`，定义的变量统一放在 `variables.tf`，入口文件统一为 `main.tf`，引用的子模块统一为 `modules.tf`。
+
+`main.tf`：模块或资源的入口文件。  
+`outputs.tf`：存放输出变量。  
+`variables.tf`：定义模块或资源需要的变量。  
+`modules.tf`：引用的子模块。  
+`datas.tf`：使用的 `data resource`。  
+
 
 ## 目录结构说明
 
