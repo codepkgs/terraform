@@ -43,5 +43,6 @@ RESOURCE_NAME：采用驼峰命名。如 testVpc
 应用更改。
 
 ## 释放资源
-1. 使用 `-target` 指定要释放的资源的路径，需要再三确认
+1. 使用 `-target` 指定要释放的资源的路径，需要再三确认。
+
 如 `terraform destroy -target module.alicloud.module.test_hangzhou_vpc.alicloud_vpc.testVpc`
