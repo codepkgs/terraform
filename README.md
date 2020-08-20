@@ -8,7 +8,7 @@ terraform 是一个基础设施管理工具，通过代码的形式管理基础�
 
 个人目前使用的目录结构为：`MODULE/ENVIRONMENT/REGION/RESOURCE/*.tf`
 
-`settings.tf`：terraform 配置文件，指定 `backend`、`required_providers` 等配置
+`settings.tf`：terraform 配置文件，指定 `backend`、`required_providers` 等配置.  
 `main.tf`：模块或资源的入口文件。  
 `outputs.tf`：存放输出变量。  
 `variables.tf`：定义模块或资源需要的变量。  
