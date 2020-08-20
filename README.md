@@ -11,13 +11,12 @@ terraform 是一个基础设施管理工具，通过代码的形式管理基础�
 
 ## 目录结构说明
 
-结构说明
-
-MODULE：模块，如alicloud、vsphere
-ENVIRONMENT：环境，如prod、dev、test等。
-REGION：云平台所对应的REGION，如果没有，则可以省略。如cn-beijing, cn-hangzhou等
-RESOURCE：具体的资源，如ecs、vpc、slb等。
-RESOURCE_NAME：采用驼峰命名。如 testVpc
+结构说明:
+MODULE：模块，如alicloud、vsphere  
+ENVIRONMENT：环境，如prod、dev、test等。  
+REGION：云平台所对应的REGION，如果没有，则可以省略。如cn-beijing, cn-hangzhou等  
+RESOURCE：具体的资源，如ecs、vpc、slb等。  
+RESOURCE_NAME：采用驼峰命名。如 testVpc  
 
 
 ## module 定义规范
