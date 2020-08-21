@@ -6,6 +6,8 @@ terraform 是一个基础设施管理工具，通过代码的形式管理基础�
 
 [Terraform Module 阿里云规范](https://developer.aliyun.com/article/642624)
 
+[Terraform Module 结构](https://www.terraform.io/docs/modules/index.html#standard-module-structure)
+
 
 # 执行步骤
 

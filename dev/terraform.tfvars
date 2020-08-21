@@ -1,0 +1,5 @@
+vsphere_user     = "root"
+vsphere_password = "P@ssw0rd"
+vsphere_server   = "10.0.0.250"
+datacenter       = "ha-datacenter"
+esxi_host        = "ha-host"
