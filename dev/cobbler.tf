@@ -157,70 +157,70 @@ module "cobbler_system_vm18" {
 }
 
 # 创建第二台虚拟机
-module "vsphere_vm19" {
-  source = "../modules/vsphere/modules/virtual_machine"
+# module "vsphere_vm19" {
+#   source = "../modules/vsphere/modules/virtual_machine"
 
-  name                 = local.vm19.name
-  firmware             = "bios"
-  num_cpus             = local.vm19.num_cpus
-  num_cores_per_socket = local.vm19.num_cores_per_socket
-  memory               = local.vm19.memory
-  guest_id             = local.vm19.guest_id
+#   name                 = local.vm19.name
+#   firmware             = "bios"
+#   num_cpus             = local.vm19.num_cpus
+#   num_cores_per_socket = local.vm19.num_cores_per_socket
+#   memory               = local.vm19.memory
+#   guest_id             = local.vm19.guest_id
 
-  disks = [
-    {
-      label            = "disk0"
-      size             = 60
-      unit_number      = 0
-      thin_provisioned = true
-    },
-    {
-      label            = "disk1"
-      size             = 200
-      unit_number      = 1
-      thin_provisioned = true
-    },
-    {
-      label            = "disk2"
-      size             = 200
-      unit_number      = 2
-      thin_provisioned = true
-    }
-  ]
+#   disks = [
+#     {
+#       label            = "disk0"
+#       size             = 60
+#       unit_number      = 0
+#       thin_provisioned = true
+#     },
+#     {
+#       label            = "disk1"
+#       size             = 200
+#       unit_number      = 1
+#       thin_provisioned = true
+#     },
+#     {
+#       label            = "disk2"
+#       size             = 200
+#       unit_number      = 2
+#       thin_provisioned = true
+#     }
+#   ]
 
-  network_interfaces = [
-    {
-      pg_name        = "LAN"
-      use_static_mac = true
-      mac_address    = local.vm19.mac_address
-    }
-  ]
+#   network_interfaces = [
+#     {
+#       pg_name        = "LAN"
+#       use_static_mac = true
+#       mac_address    = local.vm19.mac_address
+#     }
+#   ]
 
-  depends_on = [
-    module.cobbler_system_vm19
-  ]
-}
+#   depends_on = [
+#     module.cobbler_system_vm19
+#   ]
+# }
 
-# 创建 cobbler system
-module "cobbler_system_vm19" {
-  source = "../modules/cobbler/modules/cobbler_system"
+# # 创建 cobbler system
+# module "cobbler_system_vm19" {
+#   source = "../modules/cobbler/modules/cobbler_system"
 
-  name                = local.vm19.hostname
-  hostname            = local.vm19.hostname
-  profile             = local.vm19.profile
-  name_servers        = local.vm19.name_servers
-  name_servers_search = local.vm19.name_servers_search
-  gateway             = local.vm19.gateway
-  netboot_enable      = local.vm19.netboot_enable
-  kickstart           = local.vm19.kickstart
+#   name                = local.vm19.hostname
+#   hostname            = local.vm19.hostname
+#   profile             = local.vm19.profile
+#   name_servers        = local.vm19.name_servers
+#   name_servers_search = local.vm19.name_servers_search
+#   gateway             = local.vm19.gateway
+#   netboot_enable      = local.vm19.netboot_enable
+#   kickstart           = local.vm19.kickstart
 
-  interfaces = [
-    {
-      name        = "eth0"
-      ip_address  = local.vm19.ip_address
-      netmask     = local.vm19.netmask
-      static      = true
-      mac_address = local.vm19.mac_address
-    }
-  ]
-}
+#   interfaces = [
+#     {
+#       name        = "eth0"
+#       ip_address  = local.vm19.ip_address
+#       netmask     = local.vm19.netmask
+#       static      = true
+#       mac_address = local.vm19.mac_address
+#     }
+#   ]
+# }

@@ -18,14 +18,12 @@ data "vsphere_host" "host" {
 }
 
 data "vsphere_network" "network" {
-  # count         = var.network_interfaces != null ? length(var.network_interfaces) : 0
-  for_each = { for interface in var.network_interfaces : interface.pg_name => interface }
-  # name          = var.network_interfaces[count.index].pg_name
+  for_each      = { for interface in var.network_interfaces : interface.pg_name => interface }
   name          = each.value.pg_name
   datacenter_id = data.vsphere_datacenter.datacenter.id
 }
 
-resource "vsphere_virtual_machine" "this" {
+resource "vsphere_virtual_machine" "vm" {
   name                       = var.name
   resource_pool_id           = data.vsphere_resource_pool.pool.id
   datastore_id               = data.vsphere_datastore.datastore.id
@@ -39,7 +37,7 @@ resource "vsphere_virtual_machine" "this" {
   memory                     = var.memory * 1024
   memory_hot_add_enabled     = var.memory_hot_add_enabled
   guest_id                   = var.guest_id
-  wait_for_guest_net_timeout = 30
+  wait_for_guest_net_timeout = 0
 
   dynamic "disk" {
     for_each = toset(var.disks)
