@@ -34,7 +34,7 @@ variable "profile_kernel_options" {
 variable "boot_menu" {
   type        = bool
   description = "enable boot menu"
-  default     = false
+  default     = true
 }
 
 variable "profile_repos" {

@@ -7,4 +7,8 @@ resource "cobbler_profile" "profile" {
   name_servers_search = var.profile_ns_search
   kernel_options      = var.profile_kernel_options
   repos               = length(var.profile_repos) == 0 ? null : var.profile_repos
+  # virt_type           = "kvm"
+  # virt_disk_driver    = "raw"
+  # virt_ram            = 512
+  # virt_file_size      = 5
 }

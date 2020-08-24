@@ -1,7 +1,27 @@
-# 定义要创建的虚拟机的信息
+# 定义cobble kickstart 相关的信息
+locals {
+  cobbler_kickstart = {
+    kickstart_filename   = "centos7.ks"
+    kickstart_local_path = "files/cobbler_centos7.ks"
+  }
+}
+
+# 定义cobbler profile相关的信息
+locals {
+  cobbler_profile = {
+    # cobbler profile 
+    profile_name      = "CentOS7_1810-x86_64"
+    profile_distro    = "CentOS7.6_1810-x86_64"
+    profile_ks        = "/var/lib/cobbler/kickstarts/centos7.ks"
+    profile_ns        = ["10.0.100.1"]
+    profile_ns_search = ["fdisk.cc"]
+  }
+}
+
+# 定义要创建的vm的信息
 locals {
   vm18 = {
-    netboot_enable       = true
+    # vsphere virtual machine config
     num_cpus             = 4
     num_cores_per_socket = 4
     memory               = 8
@@ -12,13 +32,17 @@ locals {
     netmask              = "255.255.255.0"
     gateway              = "10.0.100.254"
     mac_address          = "00:50:56:10:00:01"
-    profile              = "CentOS7_1810-x86_64"
-    name_servers         = ["10.0.100.1"]
-    name_servers_search  = ["fdisk.cc"]
+
+    # cobbler system
+    netboot_enable      = true
+    profile             = module.cobbler_profile_centos7_1810.profile_name
+    name_servers        = module.cobbler_profile_centos7_1810.profile_name_servers
+    name_servers_search = module.cobbler_profile_centos7_1810.profile_name_servers_search
+    kickstart           = module.cobbler_profile_centos7_1810.profile_kickstart
   }
 
   vm19 = {
-    netboot_enable       = true
+    # vsphere virtual machine config
     num_cpus             = 4
     num_cores_per_socket = 4
     memory               = 8
@@ -29,9 +53,13 @@ locals {
     netmask              = "255.255.255.0"
     gateway              = "10.0.100.254"
     mac_address          = "00:50:56:10:00:02"
-    profile              = "CentOS7_1810-x86_64"
-    name_servers         = ["10.0.100.1"]
-    name_servers_search  = ["fdisk.cc"]
+
+    # cobbler system
+    netboot_enable      = true
+    profile             = module.cobbler_profile_centos7_1810.profile_name
+    name_servers        = module.cobbler_profile_centos7_1810.profile_name_servers
+    name_servers_search = module.cobbler_profile_centos7_1810.profile_name_servers_search
+    kickstart           = module.cobbler_profile_centos7_1810.profile_kickstart
   }
 }
 
@@ -40,19 +68,19 @@ module "cobbler_kickstart_centos7" {
   source = "../modules/cobbler/modules/cobbler_kickstart_file"
 
   # filename is : /var/lib/cobbler/kickstarts/centos7.ks
-  kickstart_filename = "centos7.ks"
-  kickstart_contents = file("files/cobbler_centos7.ks")
+  kickstart_filename = local.cobbler_kickstart.kickstart_filename
+  kickstart_contents = file(local.cobbler_kickstart.kickstart_local_path)
 }
 
 # 创建cobbler profile
 module "cobbler_profile_centos7_1810" {
   source = "../modules/cobbler/modules/cobbler_profile"
 
-  profile_name      = "CentOS7_1810-x86_64"
-  profile_distro    = "CentOS7.6_1810-x86_64"
-  profile_ks        = "/var/lib/cobbler/kickstarts/centos7.ks"
-  profile_ns        = ["10.0.100.1"]
-  profile_ns_search = ["fdisk.cc"]
+  profile_name      = local.cobbler_profile.profile_name
+  profile_distro    = local.cobbler_profile.profile_distro
+  profile_ks        = local.cobbler_profile.profile_ks
+  profile_ns        = local.cobbler_profile.profile_ns
+  profile_ns_search = local.cobbler_profile.profile_ns_search
 
   depends_on = [
     module.cobbler_kickstart_centos7
@@ -115,6 +143,7 @@ module "cobbler_system_vm18" {
   name_servers_search = local.vm18.name_servers_search
   gateway             = local.vm18.gateway
   netboot_enable      = local.vm18.netboot_enable
+  kickstart           = local.vm18.kickstart
 
   interfaces = [
     {
@@ -128,7 +157,6 @@ module "cobbler_system_vm18" {
 }
 
 # 创建第二台虚拟机
-# 创建虚拟机
 module "vsphere_vm19" {
   source = "../modules/vsphere/modules/virtual_machine"
 
@@ -184,6 +212,7 @@ module "cobbler_system_vm19" {
   name_servers_search = local.vm19.name_servers_search
   gateway             = local.vm19.gateway
   netboot_enable      = local.vm19.netboot_enable
+  kickstart           = local.vm19.kickstart
 
   interfaces = [
     {

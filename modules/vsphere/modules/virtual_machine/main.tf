@@ -26,20 +26,20 @@ data "vsphere_network" "network" {
 }
 
 resource "vsphere_virtual_machine" "this" {
-  name                   = var.name
-  resource_pool_id       = data.vsphere_resource_pool.pool.id
-  datastore_id           = data.vsphere_datastore.datastore.id
-  host_system_id         = data.vsphere_host.host.id
-  annotation             = var.annotation
-  firmware               = var.firmware
-  num_cpus               = var.num_cpus
-  num_cores_per_socket   = var.num_cores_per_socket
-  cpu_hot_add_enabled    = var.cpu_hot_add_enabled
-  cpu_hot_remove_enabled = var.cpu_hot_remove_enabled
-  memory                 = var.memory * 1024
-  memory_hot_add_enabled = var.memory_hot_add_enabled
-  guest_id               = var.guest_id
-
+  name                       = var.name
+  resource_pool_id           = data.vsphere_resource_pool.pool.id
+  datastore_id               = data.vsphere_datastore.datastore.id
+  host_system_id             = data.vsphere_host.host.id
+  annotation                 = var.annotation
+  firmware                   = var.firmware
+  num_cpus                   = var.num_cpus
+  num_cores_per_socket       = var.num_cores_per_socket
+  cpu_hot_add_enabled        = var.cpu_hot_add_enabled
+  cpu_hot_remove_enabled     = var.cpu_hot_remove_enabled
+  memory                     = var.memory * 1024
+  memory_hot_add_enabled     = var.memory_hot_add_enabled
+  guest_id                   = var.guest_id
+  wait_for_guest_net_timeout = 30
 
   dynamic "disk" {
     for_each = toset(var.disks)
