@@ -74,15 +74,16 @@ variable "memory_hot_add_enabled" {
   default     = true
 }
 
-variable "cdrom_datastore" {
-  type        = string
-  description = "cdrom datastore name"
-  default     = "datastore1"
+variable "use_static_mac" {
+  type        = bool
+  description = "use staic mac address instead of dynamic mac address"
+  default     = false
 }
 
-variable "cdrom_path" {
+variable "mac_address" {
   type        = string
-  description = "cdrom iso path"
+  description = "staic mac address"
+  default     = null
 }
 
 variable "disks" {
@@ -106,7 +107,15 @@ variable "disks" {
 }
 
 variable "network_interfaces" {
-  type        = list(string)
+  type = list(object({
+    pg_name        = string
+    use_static_mac = bool
+    mac_address    = string
+  }))
   description = "network interface the guest of attached"
-  default     = ["VM Network"]
+  default = [{
+    pg_name        = "VM Network"
+    use_static_mac = false
+    mac_address    = null
+  }]
 }

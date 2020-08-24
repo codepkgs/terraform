@@ -12,19 +12,16 @@ data "vsphere_datastore" "datastore" {
   datacenter_id = data.vsphere_datacenter.datacenter.id
 }
 
-data "vsphere_datastore" "cdrom_datastore" {
-  name          = var.cdrom_datastore
-  datacenter_id = data.vsphere_datacenter.datacenter.id
-}
-
 data "vsphere_host" "host" {
   name          = var.esxi_host
   datacenter_id = data.vsphere_datacenter.datacenter.id
 }
 
 data "vsphere_network" "network" {
-  count         = var.network_interfaces != null ? length(var.network_interfaces) : 0
-  name          = var.network_interfaces[count.index]
+  # count         = var.network_interfaces != null ? length(var.network_interfaces) : 0
+  for_each = { for interface in var.network_interfaces : interface.pg_name => interface }
+  # name          = var.network_interfaces[count.index].pg_name
+  name          = each.value.pg_name
   datacenter_id = data.vsphere_datacenter.datacenter.id
 }
 
@@ -43,10 +40,6 @@ resource "vsphere_virtual_machine" "this" {
   memory_hot_add_enabled = var.memory_hot_add_enabled
   guest_id               = var.guest_id
 
-  cdrom {
-    datastore_id = data.vsphere_datastore.cdrom_datastore.id
-    path         = var.cdrom_path
-  }
 
   dynamic "disk" {
     for_each = toset(var.disks)
@@ -61,7 +54,9 @@ resource "vsphere_virtual_machine" "this" {
   dynamic "network_interface" {
     for_each = var.network_interfaces
     content {
-      network_id = data.vsphere_network.network[network_interface.key].id
+      network_id     = data.vsphere_network.network[network_interface.value.pg_name].id
+      use_static_mac = network_interface.value.use_static_mac
+      mac_address    = network_interface.value.mac_address != null ? network_interface.value.mac_address : null
     }
   }
 }

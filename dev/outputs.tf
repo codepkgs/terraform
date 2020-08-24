@@ -1,3 +1,3 @@
-output "mac_address" {
-  value = module.vm-18.mac_address
-}
+# output "mac_address" {
+#   value = module.vsphere_vm18.network_interfaces.0.mac_address
+# }
