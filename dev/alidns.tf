@@ -1,15 +1,3 @@
-module "alidns_group_test1" {
-  source = "../modules/alicloud/modules/alidns_group"
-
-  alidns_group_name = "test1"
-}
-
-module "alidns_group_test2" {
-  source = "../modules/alicloud/modules/alidns_group"
-
-  alidns_group_name = "test2"
-}
-
 module "alidns_record_acme-challenge_1" {
   source = "../modules/alicloud/modules/alidns_record"
 
