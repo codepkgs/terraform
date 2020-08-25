@@ -41,3 +41,10 @@ variable "cobbler_url" {
   type        = string
   description = "cobbler server address"
 }
+
+# alicloud
+variable "region" {
+  type        = string
+  description = "region"
+  default     = "cn-beijing"
+}
